@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.1
+
+- The package no longer declares `[tool.uv.sources]`. uv applies the sources a
+  git dependency declares, so 0.1.0 imposed its own muscadet reference on any
+  project installing it, and could not be resolved by a project pinning
+  another muscadet release. The development environment is now built from
+  `requirements-dev.txt`. No code change.
+
 ## 0.1.0
 
 First release. PyCATSHOO becomes an engine registered at muscadet's extension

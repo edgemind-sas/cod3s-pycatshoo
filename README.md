@@ -43,7 +43,7 @@ provides their git sources. With uv:
 dependencies = ["cod3s-pycatshoo"]
 
 [tool.uv.sources]
-cod3s-pycatshoo = { git = "https://github.com/edgemind-sas/cod3s-pycatshoo.git", rev = "0.1.0" }
+cod3s-pycatshoo = { git = "https://github.com/edgemind-sas/cod3s-pycatshoo.git", rev = "0.1.1" }
 muscadet = { git = "https://github.com/edgemind-sas/muscadet.git", rev = "6.4.0" }
 cod3s = { git = "https://github.com/edgemind-sas/cod3s.git", rev = "1.26.0" }
 ```
@@ -85,7 +85,8 @@ process of its own, or drop the system you were handed back
 ## Development
 
 ```sh
-uv sync
+uv venv --python 3.10
+uv pip install -r requirements-dev.txt -e .
 export PYCATSHOO_DIR=<your PyCATSHOO installation>
 . "$PYCATSHOO_DIR/pycatshoorc"
 .venv/bin/python -m pytest
