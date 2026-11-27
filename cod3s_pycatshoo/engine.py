@@ -4,6 +4,8 @@ Registered through the ``muscadet.engines`` entry point of this distribution,
 so a run that names ``"pycatshoo"`` reaches it without anyone importing this
 package. What it receives is a system declaration, and what it does with it is
 the PyCATSHOO side of the seam: build one system from the document, run it.
+It also builds the components muscadet declares and no longer carries
+(:mod:`cod3s_pycatshoo.components`).
 
 Three kinds of run, two registered runners:
 
@@ -77,12 +79,15 @@ def register() -> None:
 
     from muscadet.engine import register_engine
 
+    from .components import COMPONENT_BUILDERS
+
     register_engine(
         ENGINE_NAME,
         simulate=simulate,
         isimu_start=isimu_start,
         description="PyCATSHOO, through the cod3s-pycatshoo adapter",
         replace=True,
+        component_builders=COMPONENT_BUILDERS,
     )
 
 
@@ -103,7 +108,9 @@ def simulate(
     spec : dict
         A muscadet system declaration.
     system : muscadet.System, optional
-        An empty system to fill, for a caller that owns its creation.
+        An empty system to fill, for a caller that owns its creation and reads
+        the campaign's indicators on it afterwards. Without one, the system is
+        built here and dropped once the campaign is over.
     study : dict or cod3s.specs.StudyYaml, optional
         When given, the run is a whole study: see
         :func:`cod3s_pycatshoo.study.run_study`, which also reads
@@ -137,10 +144,17 @@ def simulate(
             system=system,
         )
 
-    from .system import build_system
+    from .system import build_system, drop_system
 
     built = build_system(spec, system=system)
-    return built.simulate(*args, **kwargs)
+    if system is not None:
+        return built.simulate(*args, **kwargs)
+    # A system the caller never saw cannot be dropped by the caller, and
+    # PyCATSHOO allows one per process: it is dropped here, run or not.
+    try:
+        return built.simulate(*args, **kwargs)
+    finally:
+        drop_system(built)
 
 
 def isimu_start(spec: dict, *args: Any, **kwargs: Any) -> Any:

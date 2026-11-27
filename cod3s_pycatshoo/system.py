@@ -1,9 +1,10 @@
 """The PyCATSHOO system a declaration describes, built and dropped.
 
-At this stage the construction is delegated: muscadet's ``declare.build_system``
-reads the document and instantiates muscadet's own component classes, which are
-still PyCATSHOO components. The delegation is what this package replaces family
-by family, each one compared document against document before it switches.
+muscadet's ``declare.build_system`` reads the document. The component kinds
+listed in :mod:`cod3s_pycatshoo.components` are built by this package; the
+others are still built by muscadet's own classes, a delegation this package
+replaces family by family, each one compared document against document before
+it switches.
 """
 
 from collections.abc import Iterable

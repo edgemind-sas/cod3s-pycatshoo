@@ -31,10 +31,9 @@ dependencies = [
     # package above the one that moved, uv refusing two references for one
     # package.
     #
-    # muscadet 6.4.0 (6.0.4 on its 6.0 maintenance line) is the first release
-    # whose engine registry accepts the name ``pycatshoo``; 6.1 to 6.3 reserve
-    # it for muscadet's own body.
-    "muscadet>=6.0.4,!=6.1.*,!=6.2.*,!=6.3.*",
+    # muscadet 6.6.0 (6.0.6 on its 6.0 maintenance line) is the first release
+    # whose engine registry takes component builders; 6.1 to 6.5 do not.
+    "muscadet>=6.0.6,!=6.1.*,!=6.2.*,!=6.3.*,!=6.4.*,!=6.5.*",
     # cod3s 1.x still carries the execution layer this adapter delegates to.
     "cod3s>=1.26.0,<2",
 ]
