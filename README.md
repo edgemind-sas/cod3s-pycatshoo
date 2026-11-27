@@ -43,8 +43,8 @@ provides their git sources. With uv:
 dependencies = ["cod3s-pycatshoo"]
 
 [tool.uv.sources]
-cod3s-pycatshoo = { git = "https://github.com/edgemind-sas/cod3s-pycatshoo.git", rev = "0.1.1" }
-muscadet = { git = "https://github.com/edgemind-sas/muscadet.git", rev = "6.4.0" }
+cod3s-pycatshoo = { git = "https://github.com/edgemind-sas/cod3s-pycatshoo.git", rev = "0.2.0" }
+muscadet = { git = "https://github.com/edgemind-sas/muscadet.git", rev = "6.6.0" }
 cod3s = { git = "https://github.com/edgemind-sas/cod3s.git", rev = "1.26.0" }
 ```
 
@@ -64,9 +64,13 @@ import muscadet
 
 declaration = ...  # a muscadet system declaration (a dict)
 
-# A campaign.
+# A campaign, on a system of yours: its indicators are read on it afterwards.
+system = muscadet.System(name=declaration["name"])
 muscadet.simulate_declaration_on(
-    "pycatshoo", declaration, {"nb_runs": 1000, "schedule": [0.0, 100.0]}
+    "pycatshoo",
+    declaration,
+    {"nb_runs": 1000, "schedule": [0.0, 100.0]},
+    system=system,
 )
 
 # A whole study, written under a directory.
@@ -79,8 +83,15 @@ session = muscadet.isimu_start_declaration_on("pycatshoo", declaration)
 ```
 
 PyCATSHOO allows a single live system per process. Run each declaration in a
-process of its own, or drop the system you were handed back
-(`cod3s_pycatshoo.system.drop_system`) before building another.
+process of its own, or drop the system you hold
+(`cod3s_pycatshoo.system.drop_system`) before building another. A campaign
+called without a `system` drops the one it built.
+
+## What the adapter builds
+
+muscadet declares components and hands some of them to the engine to build.
+The adapter builds the logic gate (`ObjLogicGate`, declaration kind
+`logic_gate`). The other kinds are still built by muscadet's own classes.
 
 ## Development
 
