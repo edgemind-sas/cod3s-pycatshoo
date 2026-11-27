@@ -1,0 +1,88 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cod3s-pycatshoo"
+dynamic = ["version"]
+description = "PyCATSHOO engine adapter for muscadet system declarations"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Roland Donat", email = "roland.donat@edgemind.net"},
+]
+maintainers = [
+    {name = "Roland Donat", email = "roland.donat@edgemind.net"},
+]
+keywords = ["Modelling", "Simulation", "PyCATSHOO"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3.10",
+]
+# PyCATSHOO ships native libraries built for this interpreter line.
+requires-python = ">=3.10,<3.11"
+dependencies = [
+    # Declared by version range, never by an embedded URL: the root project
+    # that installs this adapter provides the git source of each of them (see
+    # the README). An embedded URL is what forces a "pin-only" release of every
+    # package above the one that moved, uv refusing two references for one
+    # package.
+    #
+    # muscadet 6.4.0 (6.0.4 on its 6.0 maintenance line) is the first release
+    # whose engine registry accepts the name ``pycatshoo``; 6.1 to 6.3 reserve
+    # it for muscadet's own body.
+    "muscadet>=6.0.4,!=6.1.*,!=6.2.*,!=6.3.*",
+    # cod3s 1.x still carries the execution layer this adapter delegates to.
+    "cod3s>=1.26.0,<2",
+]
+
+[project.urls]
+Homepage = "https://github.com/edgemind-sas/cod3s-pycatshoo"
+Repository = "https://github.com/edgemind-sas/cod3s-pycatshoo"
+
+# How muscadet finds this engine without importing it: the NAME of the entry
+# point is the engine's name, its value a zero-argument hook that registers it.
+[project.entry-points."muscadet.engines"]
+pycatshoo = "cod3s_pycatshoo.engine:register"
+
+[tool.setuptools]
+zip-safe = false
+
+[tool.setuptools.packages.find]
+include = ["cod3s_pycatshoo", "cod3s_pycatshoo.*"]
+
+[tool.setuptools.dynamic]
+version = {attr = "cod3s_pycatshoo.version.__version__"}
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "pyyaml",
+    "ruff>=0.15",
+]
+
+# Sources for THIS repository's own environment only: a project that depends on
+# the adapter provides its own. The cod3s reference must match the one muscadet
+# embeds, verbatim, or uv refuses to resolve.
+[tool.uv.sources]
+muscadet = { git = "https://github.com/edgemind-sas/muscadet.git", rev = "6.4.0" }
+cod3s = { git = "https://github.com/edgemind-sas/cod3s.git", rev = "1.26.0" }
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "S", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+# assert is how a test states what it checks; a test spawns the interpreter
+# it runs under.
+"tests/*" = ["S101", "S603"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--tb=short --strict-markers"
