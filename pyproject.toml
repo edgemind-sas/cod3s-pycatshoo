@@ -57,19 +57,11 @@ include = ["cod3s_pycatshoo", "cod3s_pycatshoo.*"]
 [tool.setuptools.dynamic]
 version = {attr = "cod3s_pycatshoo.version.__version__"}
 
-[dependency-groups]
-dev = [
-    "pytest>=8",
-    "pyyaml",
-    "ruff>=0.15",
-]
-
-# Sources for THIS repository's own environment only: a project that depends on
-# the adapter provides its own. The cod3s reference must match the one muscadet
-# embeds, verbatim, or uv refuses to resolve.
-[tool.uv.sources]
-muscadet = { git = "https://github.com/edgemind-sas/muscadet.git", rev = "6.4.0" }
-cod3s = { git = "https://github.com/edgemind-sas/cod3s.git", rev = "1.26.0" }
+# No ``[tool.uv.sources]`` here, on purpose. uv applies the sources a git
+# dependency declares in its own pyproject, so a source written here would
+# reach every project that installs the adapter and collide with the muscadet
+# reference that project pins. This repository's own environment is built from
+# ``requirements-dev.txt`` instead (see the README).
 
 [tool.ruff]
 line-length = 88

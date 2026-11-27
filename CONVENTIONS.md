@@ -7,8 +7,10 @@
   library. Nothing here is taken from, or describes, PyCATSHOO's own sources,
   and the PyCATSHOO binary is never committed.
 - muscadet and cod3s are declared by version range in `pyproject.toml`, never
-  by an embedded URL. `[tool.uv.sources]` serves this repository's own
-  environment only.
+  by an embedded URL, and `pyproject.toml` carries no `[tool.uv.sources]`: uv
+  applies the sources a git dependency declares, so they would reach every
+  project that installs the adapter. `requirements-dev.txt` builds this
+  repository's own environment.
 
 ## Code
 
