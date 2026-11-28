@@ -16,5 +16,15 @@ def build_logic_gate(system: Any, spec: dict) -> Any:
     return build(system, spec)
 
 
+def build_controller(system: Any, spec: dict) -> Any:
+    """Build a controller from its declaration."""
+    from .controller import build
+
+    return build(system, spec)
+
+
 #: ``declaration kind -> (system, spec) -> component``.
-COMPONENT_BUILDERS = {"logic_gate": build_logic_gate}
+COMPONENT_BUILDERS = {
+    "logic_gate": build_logic_gate,
+    "controller": build_controller,
+}

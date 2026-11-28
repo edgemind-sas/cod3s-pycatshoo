@@ -43,8 +43,8 @@ provides their git sources. With uv:
 dependencies = ["cod3s-pycatshoo"]
 
 [tool.uv.sources]
-cod3s-pycatshoo = { git = "https://github.com/edgemind-sas/cod3s-pycatshoo.git", rev = "0.2.0" }
-muscadet = { git = "https://github.com/edgemind-sas/muscadet.git", rev = "6.6.0" }
+cod3s-pycatshoo = { git = "https://github.com/edgemind-sas/cod3s-pycatshoo.git", rev = "0.3.0" }
+muscadet = { git = "https://github.com/edgemind-sas/muscadet.git", rev = "6.8.0" }
 cod3s = { git = "https://github.com/edgemind-sas/cod3s.git", rev = "1.26.0" }
 ```
 
@@ -90,8 +90,14 @@ called without a `system` drops the one it built.
 ## What the adapter builds
 
 muscadet declares components and hands some of them to the engine to build.
-The adapter builds the logic gate (`ObjLogicGate`, declaration kind
-`logic_gate`). The other kinds are still built by muscadet's own classes.
+The adapter builds:
+
+| Component | Declaration kind | Since |
+|---|---|---|
+| Logic gate (`ObjLogicGate`) | `logic_gate` | 0.2.0 |
+| Controller (`ObjCtrl`) | `controller` | 0.3.0 |
+
+The other kinds are still built by muscadet's own classes.
 
 ## Development
 

@@ -32,7 +32,9 @@ dependencies = [
     # package.
     #
     # muscadet 6.6.0 (6.0.6 on its 6.0 maintenance line) is the first release
-    # whose engine registry takes component builders; 6.1 to 6.5 do not.
+    # whose engine registry takes component builders; 6.1 to 6.5 do not. The
+    # controller builder is reached from 6.8.0 (6.0.8) on, and stays unused
+    # before.
     "muscadet>=6.0.6,!=6.1.*,!=6.2.*,!=6.3.*,!=6.4.*,!=6.5.*",
     # cod3s 1.x still carries the execution layer this adapter delegates to.
     "cod3s>=1.26.0,<2",
