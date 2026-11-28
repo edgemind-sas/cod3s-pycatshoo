@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.3.0
+
+The adapter builds the controller. muscadet declares one and hands the
+declaration here.
+
+- The engine registers a component builder for the `controller` declaration
+  kind. muscadet hands the checked declaration of a controller to it, whether
+  the controller comes from a document or from
+  `system.add_component(cls="ObjCtrl", ...)`.
+- `cod3s_pycatshoo.controller` carries the live controller: its observation
+  inputs, its boolean and value outputs, the watched automata the emission
+  grammar compiles to, the crossing automata of an aggregating input, the
+  forcing and blinding endpoints, and the republication equation. Same
+  behaviour, same variable, automaton and message-box names, and same
+  read-back document as the controller muscadet carries.
+- A controller class a model derives itself is not concerned: it is still
+  searched by name among the live classes.
+
+The builder is used by muscadet 6.8.0 (6.0.8 on the 6.0 maintenance line) and
+later. With an earlier muscadet the adapter installs and runs as 0.2.0 did,
+and muscadet builds its own controller.
+
 ## 0.2.0
 
 The adapter builds its first component. A logic gate is declared by muscadet

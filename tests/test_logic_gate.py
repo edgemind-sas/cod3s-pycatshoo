@@ -73,7 +73,7 @@ def test_listing_what_it_builds_loads_nothing_native():
     probe = (
         "import sys\n"
         "import cod3s_pycatshoo.components as c\n"
-        "assert sorted(c.COMPONENT_BUILDERS) == ['logic_gate']\n"
+        "assert sorted(c.COMPONENT_BUILDERS) == ['controller', 'logic_gate']\n"
         "print(sorted(n for n in ('Pycatshoo', 'cod3s', 'muscadet') "
         "if n in sys.modules))\n"
     )

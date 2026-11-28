@@ -1,7 +1,7 @@
 # The environment this repository is developed and tested in.
 #   uv venv --python 3.10 && uv pip install -r requirements-dev.txt -e .
 # The cod3s reference is the one the chosen muscadet release embeds.
-muscadet @ git+https://github.com/edgemind-sas/muscadet.git@6.6.0
+muscadet @ git+https://github.com/edgemind-sas/muscadet.git@6.8.0
 cod3s @ git+https://github.com/edgemind-sas/cod3s.git@1.26.0
 pytest>=8
 pyyaml
